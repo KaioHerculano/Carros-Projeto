@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    form {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+  
+    form h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #0096c7; /* Alterado para cor azul */
+    }
+  
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 600px;
+      background-color: #fff; /* Adicionado fundo branco à tabela */
+      border-radius: 10px; /* Borda arredondada */
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Sutil sombra */
+      overflow: hidden; /* Para garantir que o arredondamento das bordas apareça */
+    }
+  
+    th, td {
+      padding: 10px; /* Aumentado o espaçamento interno */
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+  
+    th {
+      background-color: #f2f2f2;
+    }
+  
+    input[type="text"], input[type="number"], select, textarea {
+      padding: 10px;
+      font-size: 14px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 12px; /* Aumentado o espaçamento inferior */
+      transition: border-color 0.3s ease-in-out;
+      border-radius: 10px; /* Bordas arredondadas */
+    }
+  
+    input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #0096c7; /* Alterado para cor azul ao focar */
+    }
+  
+    .btn {
+      background-color: #0096c7;
+      color: #fff;
+      border: none;
+      padding: 12px 24px; /* Aumentado o padding */
+      font-size: 16px;
+      border-radius: 10px; /* Bordas arredondadas */
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+  
+    .buttons-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  
+    .btn {
+      display: inline-block;
+      margin: 0 10px;
+    }
+  
+    .btn:hover {
+      background-color: #108eb8; /* Alterado para tom mais escuro ao passar o mouse */
+    }
+  
+    .btn-danger {
+      background-color: #d9534f;
+      text-decoration: none !important;
+      border-radius: 10px; /* Bordas arredondadas */
+    }
+  
+    .btn-danger:hover {
+      background-color: #d2221c;
+    }
+  
+    .error-message {
+      color: #d9534f;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+  
+    a {
+      text-decoration: none !important;
+    }
+
+    /* Estilos para modo escuro */
+    body.dark-mode form {
+      background-color: #444; /* Fundo mais escuro para o formulário */
+      box-shadow: 0 2px 6px rgba(255, 255, 255, 0.1); /* Sutil sombra clara */
+      color: #ddd; /* Texto claro */
+    }
+
+    body.dark-mode form h1 {
+      color: #66c7ff; /* Cor clara para o título */
+    }
+
+    body.dark-mode table {
+      background-color: #555; /* Fundo mais escuro para a tabela */
+    }
+
+    body.dark-mode th, body.dark-mode td {
+      border-bottom: 1px solid #666; /* Bordas mais escuras */
+      color: #ddd; /* Texto claro */
+    }
+
+    body.dark-mode th {
+      background-color: #666; /* Fundo mais escuro para o cabeçalho */
+    }
+
+    body.dark-mode input[type="text"], body.dark-mode input[type="number"], 
+    body.dark-mode select, body.dark-mode textarea {
+      background-color: #555; /* Fundo escuro para inputs */
+      border-color: #666; /* Bordas escuras */
+      color: #ddd; /* Texto claro */
+    }
+
+    body.dark-mode input[type="text"]:focus, body.dark-mode input[type="number"]:focus, 
+    body.dark-mode select:focus, body.dark-mode textarea:focus {
+      border-color: #66c7ff; /* Alterado para cor azul ao focar */
+    }
+
+    body.dark-mode .btn {
+      background-color: #66c7ff; /* Alterado para cor azul clara */
+    }
+
+    body.dark-mode .btn:hover {
+      background-color: #108eb8; /* Alterado para tom mais escuro ao passar o mouse */
+    }
+
+    body.dark-mode .btn-danger {
+      background-color: #d9534f; /* Cor vermelha */
+    }
+
+    body.dark-mode .btn-danger:hover {
+      background-color: #d2221c; /* Tom mais escuro ao passar o mouse */
+    }
+
+    body.dark-mode .error-message {
+      color: #ff9999; /* Cor clara para mensagem de erro */
+    }
+
+    body.dark-mode a {
+      color: #ffffff; /* Cor clara para links */
+    }
+</style>
+  
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <h1>Editar Carro</h1>
+  <table>
+    {{ form.as_table }}
+  </table>
+  <div>
+    <div class="buttons-container">
+      <input type="submit" value="Salvar Alterações" class="btn btn-primary">
+      <a href="{% url 'cars_list' %}" class="btn btn-secondary">Cancelar</a>
+      <a href="{% url 'car_delete' pk=object.pk %}" class="btn btn-danger">Deletar</a>
+    </div>
+  </div>
+</form>
+{% endblock %}

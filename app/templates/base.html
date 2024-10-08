@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+  <style>
+    body {
+        font-family: 'Open Sans', sans-serif;
+        background-color: #f7f7f7;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    header {
+        background-color: #0096c7;
+        color: #fff;
+        text-align: center;
+        padding: 10px 0;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    footer {
+        background-color: #ccc;
+        color: #333;
+        padding: 20px;
+        text-align: center;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    nav {
+        background-color: #0096c7;
+        color: #fff;
+        height: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        transition: color 0.3s;
+    }
+
+    nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    nav ul li {
+        margin: 0 10px;
+    }
+
+    nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 16px;
+        padding: 15px;
+        transition: all 0.3s ease;
+    }
+
+    nav ul li a:hover {
+        background-color: #32bbe8;
+    }
+
+    nav ul li.active a {
+        background-color: #666;
+    }
+
+    nav ul li.active a:hover {
+        background-color: #999;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+        width: calc(100% - 22px);
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+        border-color: #0096c7;
+    }
+
+    .form-actions {
+        text-align: center;
+    }
+
+    .form-actions input {
+        background-color: #0096c7;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .form-actions input:hover {
+        background-color: #007ba7;
+    }
+
+    .error {
+        color: red;
+        margin-top: 5px;
+    }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+        background-color: #333;
+        color: #fff;
+    }
+
+    footer.dark-mode {
+        background-color: #444;
+        color: #fff;
+    }
+
+    .container.dark-mode {
+        background-color: #444;
+        color: #fff;
+    }
+
+    .form-group input.dark-mode, .form-group select.dark-mode, .form-group textarea.dark-mode {
+        background-color: #555;
+        color: #fff;
+        border: 1px solid #666;
+    }
+
+    .form-actions input.dark-mode {
+        background-color: #007ba7;
+        color: #fff;
+    }
+
+    nav ul li a.dark-mode {
+        color: #fff;
+    }
+
+    nav ul li a.dark-mode:hover {
+        background-color: #006c94;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        {% if user.is_authenticated %}
+          <li>Olá, {{ user.username }}</li>
+          <li><a href="{% url 'new_car' %}">Cadastrar Carros</a></li>
+        {% endif %}
+
+        {% if not user.is_authenticated %}
+          <li><a href="{% url 'register' %}">Cadastre-se</a></li>
+          <li><a href="{% url 'login' %}">Entrar</a></li>
+        {% endif %}
+
+        <li><a href="{% url 'cars_list' %}">Carros</a></li>
+
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'logout' %}">Sair</a></li>
+        {% endif %}
+      </ul>
+      <button id="toggle-dark-mode" class="dark-mode-btn">☯</button>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Kaio H. BR Multimarcas </p>
+</footer>
+
+
+  <script>
+    // Função para aplicar o modo escuro
+    function applyDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        document.querySelector('footer').classList.toggle('dark-mode');
+        document.querySelectorAll('.container').forEach(container => container.classList.toggle('dark-mode'));
+        document.querySelectorAll('.form-group input, .form-group select, .form-group textarea').forEach(input => input.classList.toggle('dark-mode'));
+        document.querySelectorAll('.form-actions input').forEach(button => button.classList.toggle('dark-mode'));
+        document.querySelectorAll('nav ul li a').forEach(link => link.classList.toggle('dark-mode'));
+    }
+
+    // Carregar a preferência do modo escuro do localStorage
+    if (localStorage.getItem('dark-mode') === 'enabled') {
+        applyDarkMode();
+    }
+
+    const toggleDarkModeBtn = document.getElementById('toggle-dark-mode');
+    toggleDarkModeBtn.addEventListener('click', () => {
+        if (localStorage.getItem('dark-mode') === 'enabled') {
+            localStorage.setItem('dark-mode', 'disabled');
+        } else {
+            localStorage.setItem('dark-mode', 'enabled');
+        }
+        applyDarkMode();
+    });
+  </script>
+</body>
+</html>

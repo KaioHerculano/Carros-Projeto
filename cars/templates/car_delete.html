@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    body {
+      background-color: #f9f9f9; /* Cor de fundo mais suave */
+      font-family: Arial, sans-serif; /* Fonte mais comum */
+    }
+  
+    form {
+      max-width: 500px; /* Reduzindo um pouco a largura máxima */
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff; /* Fundo branco */
+      border-radius: 8px; /* Borda mais arredondada */
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Sutil sombra */
+    }
+  
+    form h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #d9534f; /* Cor vermelha para indicar ação de deletar */
+    }
+  
+    .confirmation-message {
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 1.2rem;
+      color: #555; /* Cor um pouco mais escura para a mensagem de confirmação */
+    }
+  
+    .btn {
+      background-color: #d9534f; /* Cor vermelha para botão de deletar */
+      color: #fff;
+      border: none;
+      padding: 12px 24px; /* Aumentado o padding */
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+  
+    .btn:hover {
+      background-color: #c9302c; /* Tom mais escuro ao passar o mouse */
+    }
+  
+    .btn-danger {
+      background-color: #555; /* Cor cinza para botão de cancelar */
+      color: #fff; /* Texto branco */
+      margin-left: 10px;
+    }
+  
+    .btn-danger:hover {
+      background-color: #333; /* Tom mais escuro ao passar o mouse */
+    }
+  
+    a {
+      text-decoration: none !important;
+    }
+
+    /* Estilos para modo escuro */
+    body.dark-mode {
+      background-color: #333; /* Cor de fundo mais escura */
+    }
+
+    body.dark-mode form {
+      background-color: #444; /* Fundo mais escuro para o formulário */
+      box-shadow: 0 2px 6px rgba(255, 255, 255, 0.1); /* Sutil sombra clara */
+    }
+
+    body.dark-mode form h1,
+    body.dark-mode .confirmation-message {
+      color: #ddd; /* Cor clara para o texto */
+    }
+
+    body.dark-mode .btn {
+      background-color: #d9534f; /* Cor vermelha para botão de deletar */
+    }
+
+    body.dark-mode .btn:hover {
+      background-color: #c9302c; /* Tom mais escuro ao passar o mouse */
+    }
+
+    body.dark-mode .btn-danger {
+      background-color: #777; /* Cor cinza claro para botão de cancelar */
+    }
+
+    body.dark-mode .btn-danger:hover {
+      background-color: #555; /* Tom mais escuro ao passar o mouse */
+    }
+</style>
+  
+<form method="post">
+  {% csrf_token %}
+  <h1>Deletar Carro</h1>
+  <div class="confirmation-message">
+    Tem certeza que deseja deletar este carro?
+  </div>
+  <div style="text-align: center;"> <!-- Centralizando os botões -->
+    <input type="submit" value="Deletar" class="btn">
+    <a href="{% url 'car_detail' pk=object.pk %}" class="btn btn-danger">Cancelar</a>
+  </div>
+</form>
+
+{% endblock %}
