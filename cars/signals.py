@@ -15,6 +15,7 @@ def car_inventory_update():
         cars_value=cars_value
     )
 
+
 @receiver(pre_save, sender=Car)
 def car_pre_save(sender, instance, **kwargs):
     if not instance.bio:
@@ -26,10 +27,9 @@ def car_pre_save(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Car)
 def car_post_save(sender, instance, **kwargs):
-   car_inventory_update()
+    car_inventory_update()
 
 
 @receiver(post_delete, sender=Car)
 def car_post_delete(sender, instance, **kwargs):
     car_inventory_update()
-    
