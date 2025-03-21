@@ -127,7 +127,6 @@
         margin-top: 5px;
     }
 
-    /* Dark Mode Styles */
     body.dark-mode {
         background-color: #333;
         color: #fff;
@@ -199,7 +198,6 @@
 
 
   <script>
-    // Função para aplicar o modo escuro
     function applyDarkMode() {
         document.body.classList.toggle('dark-mode');
         document.querySelector('footer').classList.toggle('dark-mode');
@@ -209,7 +207,6 @@
         document.querySelectorAll('nav ul li a').forEach(link => link.classList.toggle('dark-mode'));
     }
 
-    // Carregar a preferência do modo escuro do localStorage
     if (localStorage.getItem('dark-mode') === 'enabled') {
         applyDarkMode();
     }
