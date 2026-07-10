@@ -30,7 +30,7 @@ class NewCarCreateView(CreateView):
     model = Car
     form_class = CarModelForm
     template_name = 'new_car.html'
-    success_url = '/cars/'
+    success_url = reverse_lazy('cars_list')
 
 
 @method_decorator(login_required(login_url='login'), name='dispatch')
@@ -47,4 +47,4 @@ class CarUpdateView(UpdateView):
 class CarDeleteView(DeleteView):
     model = Car
     template_name = 'car_delete.html'
-    success_url = '/cars/'
+    success_url = reverse_lazy('cars_list')
