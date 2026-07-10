@@ -1,5 +1,7 @@
 # Carros
 
+> **Nota:** Este foi o meu **primeiro projeto** de desenvolvimento web! 🚀 Ele foi construído enquanto eu aprendia Python e Django. Recentemente ele passou por uma refatoração completa de interface utilizando Bootstrap 5.
+
 Este é um projeto Django para gerenciar um catálogo de carros. Ele permite que os usuários visualizem, cadastrem, atualizem e excluam informações sobre carros.
 
 ## Funcionalidades
