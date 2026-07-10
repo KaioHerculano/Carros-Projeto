@@ -68,23 +68,23 @@ Este é um projeto Django para gerenciar um catálogo de carros. Ele permite que
 
 ## Configuração do uWSGI
 
-O projeto inclui arquivos de configuração para uWSGI (`carros.ini` e [carros_uwsgi.ini](http://_vscodecontentref_/5)) para implantação em um servidor de produção.
+O projeto inclui arquivos de configuração para uWSGI na pasta `deploy/` para implantação em um servidor de produção.
 
 ## 📷 Capturas de Tela
 
 ### Login:
-![Lista de Produtos](screenshot/login.jpg)
+![Lista de Produtos](.github/screenshot/login.jpg)
 
 ### Cadastre-se:
-![Lista de Produtos](screenshot/cadastre-se.jpg)
+![Lista de Produtos](.github/screenshot/cadastre-se.jpg)
 
 ### Home:
-![Página Inicial](screenshot/home.jpg)
+![Página Inicial](.github/screenshot/home.jpg)
 
 ###  Detalhes:
-![Lista de Produtos](screenshot/detail.jpg)
+![Lista de Produtos](.github/screenshot/detail.jpg)
 
 ### Editar Carro:
-![Lista de Produtos](screenshot/update.jpg)
+![Lista de Produtos](.github/screenshot/update.jpg)
 
 
