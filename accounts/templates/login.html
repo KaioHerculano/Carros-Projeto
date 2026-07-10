@@ -1,82 +1,28 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
-{% block title %}Entrar{% endblock %}
+{% block title %}Entrar - BR Multimarcas{% endblock %}
 
 {% block content %}
-<style>
-  .container {
-      max-width: 400px;
-      margin: 50px auto;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-  }
-
-  .form-group {
-      margin-bottom: 15px;
-  }
-
-  .form-group label {
-      display: block;
-      margin-bottom: 5px;
-  }
-
-  .form-group input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-  }
-
-  .form-group input:focus {
-      border-color: #0096c7;
-  }
-
-  .form-actions {
-      text-align: center;
-  }
-
-  .form-actions input {
-      background-color: #0096c7;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-  }
-
-  .form-actions input:hover {
-      background-color: #007ba7;
-  }
-
-  .error {
-      color: red;
-      margin-top: 5px;
-  }
-</style>
-
-<div class="container">
-    <h2>Entrar</h2>
-    <form method="post">
-        {% csrf_token %}
-        {% for field in login_form %}
-            <div class="form-group">
-                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {{ field }}
-                {% if field.errors %}
-                    <div class="error">
-                        {% for error in field.errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4 mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white text-center">
+                <h3 class="mb-0">Entrar</h3>
             </div>
-        {% endfor %}
-        <div class="form-actions">
-            <input type="submit" value="Entrar">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ login_form|crispy }}
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary">Entrar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                Ainda não tem uma conta? <a href="{% url 'register' %}" class="text-decoration-none">Cadastre-se</a>
+            </div>
         </div>
-    </form>
+    </div>
 </div>
 {% endblock %}

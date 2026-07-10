@@ -1,150 +1,58 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}Nossos Carros - BR Multimarcas{% endblock %}
+
 {% block content %}
-  <style>
-    .car-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin: 0 auto;
-      max-width: 1200px;
-      padding: 20px;
-    }
+<div class="row justify-content-center mb-5 mt-4">
+    <div class="col-md-8">
+        <form method="GET" action="{% url 'cars_list' %}" class="d-flex">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Buscar carro..." value="{{ request.GET.search|default:'' }}">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search me-1"></i> Buscar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 
-    .car-card {
-      background-color: #ffffff;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-      border-radius: 15px;
-      overflow: hidden;
-      text-align: center;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    .car-card:hover {
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-      transform: translateY(-2px);
-    }
-
-    .car-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-    }
-
-    .car-card h2 {
-      font-size: 1.5rem;
-      margin: 10px;
-      color: #333; 
-    }
-
-    .car-card p {
-      font-size: 1rem;
-      margin-bottom: 10px;
-      color: #777; 
-    }
-
-    body.dark-mode .car-card {
-      background-color: #444;
-      color: #fff;
-    }
-
-    body.dark-mode .car-card img {
-      border: 2px solid #fff;
-    }
-
-    body.dark-mode .car-card h2, body.dark-mode .car-card p {
-      color: #ddd;
-    }
-
-    @media (max-width: 768px) {
-      .car-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 480px) {
-      .car-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    form {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
-        text-align: center;
-        padding: 20px;
-    }
-
-    input[type="text"] {
-        padding: 10px;
-        font-size: 16px;
-        border: 2px solid #e3e1e1;
-        border-radius: 4px;
-        margin-right: 10px;
-        transition: border-bottom-color 0.3s ease-in-out;
-    }
-
-    input[type="text"]:focus {
-        outline: none;
-        border-bottom-color: #e3e1e1;
-    }
-
-    button[type="submit"] {
-        background-color: #0096c7;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease-in-out;
-    }
-
-    button[type="submit"]:hover {
-        background-color: #108eb8;
-    }
-  
-    a {
-      font-size: 18px;
-      color: #333;
-      text-decoration: none;
-    }
-
-    a:hover {
-      color: #0096c7;
-    }
-  </style>
-
-  <form method="GET" action="{% url 'cars_list' %}">
-    <input type="text" name="search" placeholder="Buscar carro...">
-    <button type="submit">Buscar</button>
-  </form>
-
-  <div class="car-grid">
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     {% if cars %}
-      {% for car in cars %}
-        <a href="{% url 'car_detail' car.pk %}">
-          <div class="car-card">
-            {% if car.photo %}
-            <img src="{{ car.photo.url }}" alt="{{ car.model }} - {{ car.brand }}">
-            {% else %}
-            <img src="{% static 'imagens/default_car_image.jpg' %}" alt="Foto Padrão">
-            {% endif %}
-            <h2>{{ car.brand }} {{ car.model }}</h2>
-            <p>{{ car.factory_year }} - R$ {{ car.value }}</p>
-          </div>
-        </a>
-      {% endfor %}
+        {% for car in cars %}
+            <div class="col">
+                <a href="{% url 'car_detail' car.pk %}" class="text-decoration-none text-reset">
+                    <div class="card h-100 shadow-sm car-card-hover">
+                        {% if car.photo %}
+                            <img src="{{ car.photo.url }}" class="card-img-top" alt="{{ car.model }} - {{ car.brand }}" style="height: 250px; object-fit: cover;">
+                        {% else %}
+                            <img src="{% static 'imagens/default_car_image.jpg' %}" class="card-img-top" alt="Foto Padrão" style="height: 250px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ car.brand }} {{ car.model }}</h5>
+                            <p class="card-text text-muted mb-0">
+                                {{ car.factory_year }} &bull; R$ {{ car.value }}
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
     {% else %}
-      <p class="no-results">Nenhum carro encontrado.</p>
+        <div class="col-12 text-center mt-5">
+            <p class="lead text-muted">Nenhum carro encontrado.</p>
+        </div>
     {% endif %}
-  </div>
+</div>
 
+<style>
+    /* Apenas uma pequena customização para manter o efeito de hover original */
+    .car-card-hover {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .car-card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+    }
+</style>
 {% endblock %}

@@ -1,106 +1,32 @@
 {% extends "base.html" %}
 
+{% block title %}Excluir Carro - BR Multimarcas{% endblock %}
+
 {% block content %}
-
-<style>
-    body {
-      background-color: #f9f9f9;
-      font-family: Arial, sans-serif;
-    }
-  
-    form {
-      max-width: 500px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-  
-    form h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      text-align: center;
-      color: #d9534f;
-    }
-  
-    .confirmation-message {
-      margin-bottom: 20px;
-      text-align: center;
-      font-size: 1.2rem;
-      color: #555;
-    }
-  
-    .btn {
-      background-color: #d9534f;
-      color: #fff;
-      border: none;
-      padding: 12px 24px;
-      font-size: 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease-in-out;
-    }
-  
-    .btn:hover {
-      background-color: #c9302c;
-    }
-  
-    .btn-danger {
-      background-color: #555;
-      color: #fff;
-      margin-left: 10px;
-    }
-  
-    .btn-danger:hover {
-      background-color: #333;
-    }
-  
-    a {
-      text-decoration: none !important;
-    }
-
-    body.dark-mode {
-      background-color: #333;
-    }
-
-    body.dark-mode form {
-      background-color: #444;
-      box-shadow: 0 2px 6px rgba(255, 255, 255, 0.1);
-    }
-
-    body.dark-mode form h1,
-    body.dark-mode .confirmation-message {
-      color: #ddd;
-    }
-
-    body.dark-mode .btn {
-      background-color: #d9534f;
-    }
-
-    body.dark-mode .btn:hover {
-      background-color: #c9302c;
-    }
-
-    body.dark-mode .btn-danger {
-      background-color: #777;
-    }
-
-    body.dark-mode .btn-danger:hover {
-      background-color: #555;
-    }
-</style>
-  
-<form method="post">
-  {% csrf_token %}
-  <h1>Deletar Carro</h1>
-  <div class="confirmation-message">
-    Tem certeza que deseja deletar este carro?
-  </div>
-  <div style="text-align: center;">
-    <input type="submit" value="Deletar" class="btn">
-    <a href="{% url 'car_detail' pk=object.pk %}" class="btn btn-danger">Cancelar</a>
-  </div>
-</form>
-
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6 mt-5">
+        <div class="card border-danger shadow">
+            <div class="card-header bg-danger text-white">
+                <h3 class="mb-0 text-center">Confirmar Exclusão</h3>
+            </div>
+            <div class="card-body text-center">
+                <h4 class="mb-4">Tem certeza que deseja excluir este carro?</h4>
+                <p class="lead">
+                    <strong>{{ object.brand }} {{ object.model }}</strong><br>
+                    <small class="text-muted">Ano: {{ object.factory_year }}</small>
+                </p>
+                <div class="alert alert-warning">
+                    Essa ação é irreversível e todos os dados relacionados a este veículo serão perdidos.
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-center gap-3 mt-4">
+                        <a href="{% url 'car_detail' object.pk %}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-danger">Sim, quero deletar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
